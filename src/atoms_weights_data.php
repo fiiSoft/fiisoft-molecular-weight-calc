@@ -445,7 +445,7 @@ return [
     'Rg',
     '272',
     '112',
-    'Copernicum',
+    'Copernicium',
     'Cn',
     '285',
 ];
