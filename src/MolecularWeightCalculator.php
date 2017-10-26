@@ -11,9 +11,9 @@ final class MolecularWeightCalculator
 {
     const SIMPLE_FORMULA = '/^[\d\p{L},]+$/u';
     const FORMULA_WITH_GROUPS = '/^[,\d\p{L}\(\)\[\]]+$/u';
-    const STARTS_WITH_DIGITS = '/^(?P<number>\d+)/u';
+    const STARTS_WITH_DIGITS = '/^\s*(?P<number>\d+)/u';
     const FORMULA_WITH_IONS = '/\d+(\+|\-)/u';
-    const COMPOUND_FORMULA = '/\s+·\s+/u';
+    const COMPOUND_FORMULA = '/(?<!\.)(·|\.)(?!\.)/u';
     
     /** @var string */
     private $symbolAndQuantityPattern;
