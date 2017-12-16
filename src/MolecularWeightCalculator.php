@@ -38,7 +38,17 @@ final class MolecularWeightCalculator
      */
     private function init()
     {
-        $dataFile = __DIR__ . DIRECTORY_SEPARATOR . 'atoms_weights_data.php';
+        $this->loadDataSetOne();
+        $this->loadDataSetTwo();
+    }
+    
+    /**
+     * @throws CorruptedDataException
+     * @return void
+     */
+    private function loadDataSetOne()
+    {
+        $dataFile = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'atoms_weights_data.php']);
         
         $data = include $dataFile;
         $numOfItems = 4 * 112; //112 elements in data
@@ -81,6 +91,28 @@ final class MolecularWeightCalculator
         $this->symbolAndQuantityPattern = str_replace(
             '{symbols}', implode('|', $symbols), '/(?P<symbol>{symbols})(?P<quantity>[\d,]+)?/u'
         );
+    }
+    
+    /**
+     * @throws CorruptedDataException
+     * @return void
+     */
+    private function loadDataSetTwo()
+    {
+        $dataFile = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', 'isotopesmatter.txt']);
+    
+        foreach (file($dataFile) as $line) {
+            $line = trim($line);
+            if ($line === '') {
+                break;
+            }
+            
+            list($symbol, $mass) = explode(': ', $line);
+            $mass = (float) $mass;
+            
+            $this->data[$symbol]['mass'] = $mass;
+            $this->masses[$symbol] = $mass;
+        }
     }
     
     /**
