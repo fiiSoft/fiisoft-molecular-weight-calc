@@ -332,7 +332,7 @@ final class MolecularWeightCalculator
             $totalMass += $quantity * $this->masses[$match['symbol']];
         }
     
-        if ($formula !== '') {
+        if ($formula !== false && $formula !== '') {
             $this->throwExceptionInvalidFormula($chemicalFormula);
         }
         
